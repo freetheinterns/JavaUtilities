@@ -2,7 +2,9 @@ package util;
 
 import java.util.List;
 
+// The purpose of this class is to house static helper functions that run small jobs on any type of Array or List.
 public class ArrayUtils {
+	// These arrayToString functions parse any ordered list into a readable string format.
 	public static <T> String arrayToString(List<T> ary) {
 		String str = "[";
 		for (int i = 0; i < ary.size(); ++i) {
@@ -95,6 +97,7 @@ public class ArrayUtils {
 		return new String(ary);
 	}
 
+	// These print funcitons use the above toString definitions to print to system.out.
 	public static <T> void printArray(List<T> ary) {
 		System.out.println(arrayToString(ary));
 	}
@@ -131,6 +134,7 @@ public class ArrayUtils {
 		System.out.println(arrayToString(ary));
 	}
 
+	// These swap functions swap any two elements in any ordered list.
 	public static <T> void swap(List<T> ary, int a, int b) {
 		T temp = ary.get(a);
 		ary.set(a, ary.get(b));
