@@ -140,7 +140,7 @@ public class ArrayUtils {
 		ary.set(a, ary.get(b));
 		ary.set(b, temp);
 	}
-	
+
 	public static <T> void swap(T[] ary, int a, int b) {
 		T temp = ary[a];
 		ary[a] = ary[b];

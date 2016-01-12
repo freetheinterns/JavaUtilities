@@ -9,7 +9,7 @@ import util.ArrayUtils;
 public class QuickSorter {
 	// This PRNG is used to avoid worst case run-times.
 	private static final Random rand = new Random(System.currentTimeMillis());
-	
+
 	// These qsort functions are used to run quicksort on a whole list.
 	public static <T extends Comparable<T>> void qsort(List<T> ary) {
 		qhelp(ary, 0, ary.size() - 1);
@@ -241,18 +241,18 @@ public class QuickSorter {
 	// This main function test to make sure that all of the types of lists can be sorted.
 	public static void main(String[] args) {
 		// Initialize lists of every type
-		byte[] a = { 13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11 };
-		short[] b = { 13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11 };
-		int[] c = { 13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11 };
-		long[] d = { 13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11 };
-		float[] e = { 13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11 };
-		double[] f = { 13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11 };
-		char[] g = { 'D', 'J', '9', '5', 'C', '8', '7', '4', 'L', '2', '6', 'B' };
+		byte[] a = {13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11};
+		short[] b = {13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11};
+		int[] c = {13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11};
+		long[] d = {13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11};
+		float[] e = {13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11};
+		double[] f = {13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11};
+		char[] g = {'D', 'J', '9', '5', 'C', '8', '7', '4', 'L', '2', '6', 'B'};
 		ArrayList<Byte> h = new ArrayList<Byte>();
-		for(byte x : a) {
+		for (byte x : a) {
 			h.add(x);
 		}
-		
+
 		// Print unsorted lists
 		System.out.println("UNSORTED:");
 		ArrayUtils.printArray(a);
@@ -263,7 +263,7 @@ public class QuickSorter {
 		ArrayUtils.printArray(f);
 		ArrayUtils.printArray(g);
 		ArrayUtils.printArray(h);
-		
+
 		// Sort all of the lists
 		qsort(a);
 		qsort(b);
@@ -273,7 +273,7 @@ public class QuickSorter {
 		qsort(f);
 		qsort(g);
 		qsort(h);
-		
+
 		// Print sorted results
 		System.out.println();
 		System.out.println("SORTED:");
