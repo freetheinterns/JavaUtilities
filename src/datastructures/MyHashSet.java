@@ -6,7 +6,7 @@ import java.util.Random;
 
 import util.ArrayUtils;
 
-public class MyHashTable<K, V> {
+public class MyHashSet<T> {
 	// Static prime number used in hashing. Must be < sqrt(Integer.MAX_INT).
 	private static final int LARGE_PRIME = 40009;
 	// Random numbers are used to generate a valid hash.
@@ -23,69 +23,56 @@ public class MyHashTable<K, V> {
 	// Underlying data structure.
 	private Object[] storage;
 
-	private class KVPair {
-		public K key;
-		public V value;
-
-		public KVPair(K key, V value) {
-			this.key = key;
-			this.value = value;
-		}
-
-		@Override
-		public String toString() {
-			return "(" + key + ", " + value + ")";
-		}
-	}
-
-	public MyHashTable() {
+	public MyHashSet() {
 		capacity = 100;
 		storage = new Object[capacity];
 	}
 
-	public MyHashTable(int size) {
+	public MyHashSet(int size) {
 		capacity = size;
 		storage = new Object[capacity];
 	}
 
 	// Adds an element to the hashtable.
-	public void add(K key, V value) {
+	public void add(T element) {
 		// If we have reached the limit of our acceptable ratio, expand the capacity.
 		if (size + 1 > capacity * acceptable_ratio) {
 			resize(size * 2);
 		}
 		++size;
-		int idx = hash(key);
-		KVPair P = new KVPair(key, value);
+		int idx = hash(element);
 		if (storage[idx] == null) {
-			storage[idx] = P;
+			storage[idx] = element;
 		} else if (storage[idx] instanceof LinkedList<?>) {
 			@SuppressWarnings("unchecked")
-			LinkedList<KVPair> temp = ((LinkedList<KVPair>) storage[idx]);
-			temp.add(P);
+			LinkedList<T> temp = ((LinkedList<T>) storage[idx]);
+			if (temp.contains(element)) {
+				--size;
+			} else {
+				temp.add(element);
+			}
 		} else {
-			LinkedList<KVPair> lst = new LinkedList<KVPair>();
+			if (storage[idx] == element) {
+				--size;
+				return;
+			}
+			LinkedList<T> lst = new LinkedList<T>();
 			@SuppressWarnings("unchecked")
-			KVPair temp = (KVPair) storage[idx];
+			T temp = (T) storage[idx];
 			lst.add(temp);
-			lst.add(P);
+			lst.add(element);
 			storage[idx] = lst;
 		}
 	}
 
 	// Removes (ONLY) the first instance of element found in the hashtable.
-	public void remove(K key) {
-		int idx = hash(key);
+	public void remove(T element) {
+		int idx = hash(element);
 		if (storage[idx] == null) {
 		} else if (storage[idx] instanceof LinkedList<?>) {
 			@SuppressWarnings("unchecked")
-			LinkedList<KVPair> temp = ((LinkedList<KVPair>) storage[idx]);
-			KVPair rm = null;
-			for (KVPair P : temp)
-				if (P.key == key)
-					rm = P;
-			if (rm != null)
-				temp.remove(rm);
+			LinkedList<T> temp = ((LinkedList<T>) storage[idx]);
+			temp.remove(element);
 
 			// If there is only one element left in the list, deconstruct the
 			// list;
@@ -101,21 +88,16 @@ public class MyHashTable<K, V> {
 	}
 
 	// Returns true if an instance of element is stored in the hashtable.
-	public boolean contains(K element) {
+	public boolean contains(T element) {
 		int idx = hash(element);
 		if (storage[idx] == null) {
 			return false;
 		} else if (storage[idx] instanceof LinkedList<?>) {
 			@SuppressWarnings("unchecked")
-			LinkedList<KVPair> temp = ((LinkedList<KVPair>) storage[idx]);
-			for (KVPair P : temp)
-				if (P.key == element)
-					return true;
-			return false;
+			LinkedList<T> temp = ((LinkedList<T>) storage[idx]);
+			return temp.contains(element);
 		} else {
-			@SuppressWarnings("unchecked")
-			KVPair temp = ((KVPair) storage[idx]);
-			return temp.key == element;
+			return storage[idx] == element;
 		}
 	}
 
@@ -124,19 +106,19 @@ public class MyHashTable<K, V> {
 	}
 
 	// Returns an arraylist of every element stored in the hashtable.
-	public ArrayList<KVPair> toArray() {
-		ArrayList<KVPair> out = new ArrayList<KVPair>(size);
+	public ArrayList<T> toArray() {
+		ArrayList<T> out = new ArrayList<T>(size);
 		for (Object x : storage) {
 			if (x == null)
 				continue;
 			else if (x instanceof LinkedList<?>) {
 				@SuppressWarnings("unchecked")
-				LinkedList<KVPair> temp = ((LinkedList<KVPair>) x);
-				for (KVPair obj : temp)
+				LinkedList<T> temp = ((LinkedList<T>) x);
+				for (T obj : temp)
 					out.add(obj);
 			} else {
 				@SuppressWarnings("unchecked")
-				KVPair temp = (KVPair) x;
+				T temp = (T) x;
 				out.add(temp);
 			}
 		}
@@ -146,12 +128,12 @@ public class MyHashTable<K, V> {
 	// Resizes the Object array backbone and reinserts all of the old elements.
 	public void resize(int newsize) {
 		assert (newsize > 0);
-		ArrayList<KVPair> data = toArray();
+		ArrayList<T> data = toArray();
 		capacity = newsize;
 		storage = new Object[capacity];
 		size = 0;
-		for (KVPair obj : data)
-			add(obj.key, obj.value);
+		for (T obj : data)
+			add(obj);
 	}
 
 	public void setResizeRatio(float ratio) {
@@ -163,7 +145,7 @@ public class MyHashTable<K, V> {
 
 	// Provides a consistent randomized uniform hash for an item.
 	// Always returns a hash value in the range [0 : capacity].
-	private int hash(K item) {
+	private int hash(T item) {
 		int hc = item.hashCode() % LARGE_PRIME;
 		return ((Ahash * hc + Bhash) % LARGE_PRIME) % capacity;
 	}
@@ -180,11 +162,11 @@ public class MyHashTable<K, V> {
 				System.out.println("[]");
 			else if (x instanceof LinkedList<?>) {
 				@SuppressWarnings("unchecked")
-				LinkedList<KVPair> temp = ((LinkedList<KVPair>) x);
+				LinkedList<T> temp = ((LinkedList<T>) x);
 				ArrayUtils.printArray(temp);
 			} else {
 				@SuppressWarnings("unchecked")
-				KVPair temp = (KVPair) x;
+				T temp = (T) x;
 				System.out.println("[" + temp + "]");
 			}
 		}
@@ -192,14 +174,14 @@ public class MyHashTable<K, V> {
 
 	// Run test cases
 	public static void main(String[] args) {
-		MyHashTable<String, Integer> test = new MyHashTable<String, Integer>(10);
-		test.add("Cat", 1);
-		test.add("cat", 3);
-		test.add("Cat", 2);
-		test.add("DOG", 1);
-		test.add("dog", 1);
-		test.add("Dogg", 1);
-		test.add("Wolf", 1);
+		MyHashSet<String> test = new MyHashSet<String>(10);
+		test.add("Cat");
+		test.add("cat");
+		test.add("Cat");
+		test.add("DOG");
+		test.add("dog");
+		test.add("Dogg");
+		test.add("Wolf");
 		// System.out.println(test);
 		test.prettyPrint();
 	}
