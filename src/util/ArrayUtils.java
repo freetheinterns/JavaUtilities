@@ -1,19 +1,16 @@
 package util;
 
+import java.util.Collection;
 import java.util.List;
 
 // The purpose of this class is to house static helper functions that run small jobs on any type of Array or List.
 public class ArrayUtils {
 	// These arrayToString functions parse any ordered list into a readable string format.
-	public static <T> String arrayToString(List<T> ary) {
+	public static <T> String arrayToString(Collection<T> ary) {
 		String str = "[";
-		for (int i = 0; i < ary.size(); ++i) {
-			str += ary.get(i).toString();
-			if (i != ary.size() - 1) {
-				str += ", ";
-			}
-		}
-		return str + "]";
+		for (T t : ary)
+			str += t.toString() + ", ";
+		return str.substring(0, str.length() - 2) + "]";
 	}
 
 	public static <T> String arrayToString(T[] ary) {
