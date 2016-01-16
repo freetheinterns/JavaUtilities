@@ -9,19 +9,53 @@ public class ArrayUtils {
 	public static <T> String arrayToString(Collection<T> ary) {
 		String str = "[";
 		for (T t : ary)
-			str += t.toString() + ", ";
+			if (t instanceof Collection<?>) {
+				str += arrayToString((Collection<?>) t) + ", ";
+			} else if (t instanceof Object[]) {
+				str += arrayToString((Object[]) t) + ", ";
+			} else if (t instanceof byte[]) {
+				str += arrayToString((byte[]) t) + ", ";
+			} else if (t instanceof short[]) {
+				str += arrayToString((short[]) t) + ", ";
+			} else if (t instanceof int[]) {
+				str += arrayToString((int[]) t) + ", ";
+			} else if (t instanceof long[]) {
+				str += arrayToString((long[]) t) + ", ";
+			} else if (t instanceof float[]) {
+				str += arrayToString((float[]) t) + ", ";
+			} else if (t instanceof double[]) {
+				str += arrayToString((double[]) t) + ", ";
+			} else if (t instanceof char[]) {
+				str += arrayToString((char[]) t) + ", ";
+			} else
+				str += t.toString() + ", ";
 		return str.substring(0, str.length() - 2) + "]";
 	}
 
 	public static <T> String arrayToString(T[] ary) {
 		String str = "[";
-		for (int i = 0; i < ary.length; ++i) {
-			str += ary[i].toString();
-			if (i != ary.length - 1) {
-				str += ", ";
-			}
-		}
-		return str + "]";
+		for (T t : ary)
+			if (t instanceof Collection<?>) {
+				str += arrayToString((Collection<?>) t) + ", ";
+			} else if (t instanceof Object[]) {
+				str += arrayToString((Object[]) t) + ", ";
+			} else if (t instanceof byte[]) {
+				str += arrayToString((byte[]) t) + ", ";
+			} else if (t instanceof short[]) {
+				str += arrayToString((short[]) t) + ", ";
+			} else if (t instanceof int[]) {
+				str += arrayToString((int[]) t) + ", ";
+			} else if (t instanceof long[]) {
+				str += arrayToString((long[]) t) + ", ";
+			} else if (t instanceof float[]) {
+				str += arrayToString((float[]) t) + ", ";
+			} else if (t instanceof double[]) {
+				str += arrayToString((double[]) t) + ", ";
+			} else if (t instanceof char[]) {
+				str += arrayToString((char[]) t) + ", ";
+			} else
+				str += t.toString() + ", ";
+		return str.substring(0, str.length() - 2) + "]";
 	}
 
 	public static String arrayToString(byte[] ary) {
@@ -95,7 +129,7 @@ public class ArrayUtils {
 	}
 
 	// These print funcitons use the above toString definitions to print to system.out.
-	public static <T> void printArray(List<T> ary) {
+	public static <T> void printArray(Collection<T> ary) {
 		System.out.println(arrayToString(ary));
 	}
 

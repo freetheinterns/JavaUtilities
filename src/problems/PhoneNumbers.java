@@ -1,8 +1,11 @@
 package problems;
 
+import java.util.HashMap;
+
 import util.ArrayUtils;
 
 public class PhoneNumbers {
+	private static HashMap<String, String[]> used = new HashMap<String, String[]>();
 
 	// This function takes a phone number as a String and returns all possible corresponding String permutations given a
 	// function for mapping digits to characters.
@@ -10,15 +13,17 @@ public class PhoneNumbers {
 		// Base case: empty String
 		if (pnum.length() == 0)
 			return perms;
-		
-		// Convert next (potential) digit to possible characters 
+
+		if (used.containsKey(pnum))
+			return used.get(pnum);
+		// Convert next (potential) digit to possible characters
 		String opts = numberToLetter(Character.getNumericValue(pnum.charAt(0)));
 		// Decrement String
 		pnum = pnum.substring(1);
 		// Continue if no mapping exists for character
 		if (opts == "")
 			return parsePhoneNumber(pnum, perms);
-		
+
 		// Allocate and build next String Array.
 		String[] next = new String[opts.length() * perms.length];
 		int index = 0;
@@ -27,7 +32,9 @@ public class PhoneNumbers {
 				next[index] = str + c;
 				++index;
 			}
-		return parsePhoneNumber(pnum, next);
+		String[] A = parsePhoneNumber(pnum, next);
+		used.put(pnum, A);
+		return A;
 	}
 
 	// These two functions will use the static number to char mapping that is shown on the iphone and below:
@@ -59,7 +66,7 @@ public class PhoneNumbers {
 		String[] ans = parsePhoneNumber("25", new String[] {""});
 		ArrayUtils.printArray(ans);
 		System.out.println();
-		
+
 		System.out.println("Test Case 2:");
 		String pnum = "348 - 5928";
 		String[] a2 = parsePhoneNumber(pnum, new String[] {""});
