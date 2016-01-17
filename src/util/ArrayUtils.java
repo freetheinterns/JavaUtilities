@@ -1,5 +1,6 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import java.util.List;
 public class ArrayUtils {
 	// These arrayToString functions parse any ordered list into a readable string format.
 	public static <T> String arrayToString(Collection<T> ary) {
+		if (ary == null) return "[]";
 		String str = "[";
 		for (T t : ary)
 			if (t instanceof Collection<?>) {
@@ -27,12 +29,12 @@ public class ArrayUtils {
 				str += arrayToString((double[]) t) + ", ";
 			} else if (t instanceof char[]) {
 				str += arrayToString((char[]) t) + ", ";
-			} else
-				str += t.toString() + ", ";
+			} else str += t.toString() + ", ";
 		return str.substring(0, str.length() - 2) + "]";
 	}
 
 	public static <T> String arrayToString(T[] ary) {
+		if (ary == null) return "[]";
 		String str = "[";
 		for (T t : ary)
 			if (t instanceof Collection<?>) {
@@ -53,8 +55,7 @@ public class ArrayUtils {
 				str += arrayToString((double[]) t) + ", ";
 			} else if (t instanceof char[]) {
 				str += arrayToString((char[]) t) + ", ";
-			} else
-				str += t.toString() + ", ";
+			} else str += t.toString() + ", ";
 		return str.substring(0, str.length() - 2) + "]";
 	}
 
@@ -218,5 +219,69 @@ public class ArrayUtils {
 		char temp = ary[a];
 		ary[a] = ary[b];
 		ary[b] = temp;
+	}
+
+	public static <T> List<T> createList(T[] ary) {
+		List<T> lst = new ArrayList<T>();
+		for (T t : ary) {
+			lst.add(t);
+		}
+		return lst;
+	}
+
+	public static List<Byte> createList(byte[] ary) {
+		List<Byte> lst = new ArrayList<Byte>();
+		for (Byte x : ary) {
+			lst.add(x);
+		}
+		return lst;
+	}
+
+	public static List<Short> createList(short[] ary) {
+		List<Short> lst = new ArrayList<Short>();
+		for (Short x : ary) {
+			lst.add(x);
+		}
+		return lst;
+	}
+
+	public static List<Integer> createList(int[] ary) {
+		List<Integer> lst = new ArrayList<Integer>();
+		for (Integer x : ary) {
+			lst.add(x);
+		}
+		return lst;
+	}
+
+	public static List<Long> createList(long[] ary) {
+		List<Long> lst = new ArrayList<Long>();
+		for (Long x : ary) {
+			lst.add(x);
+		}
+		return lst;
+	}
+
+	public static List<Float> createList(float[] ary) {
+		List<Float> lst = new ArrayList<Float>();
+		for (Float x : ary) {
+			lst.add(x);
+		}
+		return lst;
+	}
+
+	public static List<Double> createList(double[] ary) {
+		List<Double> lst = new ArrayList<Double>();
+		for (Double x : ary) {
+			lst.add(x);
+		}
+		return lst;
+	}
+
+	public static List<Character> createList(char[] ary) {
+		List<Character> lst = new ArrayList<Character>();
+		for (Character x : ary) {
+			lst.add(x);
+		}
+		return lst;
 	}
 }
