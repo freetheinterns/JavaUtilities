@@ -1,5 +1,6 @@
 package problems;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -36,11 +37,11 @@ public class SubstringDictionary implements Comparator<String> {
 
 	@Override
 	public String toString() {
-		return ArrayUtils.arrayToString(stringsSortedByLength);
+		return ArrayUtils.collectionToString(stringsSortedByLength);
 	}
 
 	public static void main(String[] args) {
-		List<String> unorderedList = ArrayUtils.createList(new String[] {"Long", "Longer", "Longest", "Dog", "Cat"});
+		List<String> unorderedList = Arrays.asList(new String[] {"Long", "Longer", "Longest", "Dog", "Cat"});
 		SubstringDictionary dic = new SubstringDictionary(unorderedList);
 		System.out.println(dic);
 		System.out.println(dic.longestSubstring("Alphabet"));

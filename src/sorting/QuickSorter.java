@@ -1,6 +1,8 @@
 package sorting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -122,15 +124,15 @@ public class QuickSorter {
 
 	// These partition functions choose a random piviot, then partition their segment around that piviot value.
 	private static <T extends Comparable<T>> int partition(List<T> ary, int start, int end) {
-		ArrayUtils.swap(ary, rand.nextInt(end - start) + start, end);
+		Collections.swap(ary, rand.nextInt(end - start) + start, end);
 		T pivot = ary.get(end);
 		int below = start - 1;
 		for (int above = start; above < end; ++above) {
 			if (ary.get(above).compareTo(pivot) <= 0) {
-				ArrayUtils.swap(ary, ++below, above);
+				Collections.swap(ary, ++below, above);
 			}
 		}
-		ArrayUtils.swap(ary, ++below, end);
+		Collections.swap(ary, ++below, end);
 		return below;
 	}
 
@@ -255,14 +257,14 @@ public class QuickSorter {
 
 		// Print unsorted lists
 		System.out.println("UNSORTED:");
-		ArrayUtils.printArray(a);
-		ArrayUtils.printArray(b);
-		ArrayUtils.printArray(c);
-		ArrayUtils.printArray(d);
-		ArrayUtils.printArray(e);
-		ArrayUtils.printArray(f);
-		ArrayUtils.printArray(g);
-		ArrayUtils.printArray(h);
+		Arrays.toString(a);
+		Arrays.toString(b);
+		Arrays.toString(c);
+		Arrays.toString(d);
+		Arrays.toString(e);
+		Arrays.toString(f);
+		Arrays.toString(g);
+		ArrayUtils.printCollection(h);
 
 		// Sort all of the lists
 		qsort(a);
@@ -277,13 +279,13 @@ public class QuickSorter {
 		// Print sorted results
 		System.out.println();
 		System.out.println("SORTED:");
-		ArrayUtils.printArray(a);
-		ArrayUtils.printArray(b);
-		ArrayUtils.printArray(c);
-		ArrayUtils.printArray(d);
-		ArrayUtils.printArray(e);
-		ArrayUtils.printArray(f);
-		ArrayUtils.printArray(g);
-		ArrayUtils.printArray(h);
+		Arrays.toString(a);
+		Arrays.toString(b);
+		Arrays.toString(c);
+		Arrays.toString(d);
+		Arrays.toString(e);
+		Arrays.toString(f);
+		Arrays.toString(g);
+		ArrayUtils.printCollection(h);
 	}
 }

@@ -1,9 +1,8 @@
 package problems;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
-
-import util.ArrayUtils;
 
 public class PhoneNumbers {
 	// This Map stores all of the phone numbers that have already been parsed, as well as their potential outputs.
@@ -110,7 +109,7 @@ public class PhoneNumbers {
 
 		System.out.println("\nTest Case 1:");
 		String[] ans = parsePhoneNumber("253");
-		ArrayUtils.printArray(ans);
+		System.out.println(Arrays.toString(ans));
 
 		System.out.println("\nTest Case 2:");
 		String phoneNumber = "348 - 5928";

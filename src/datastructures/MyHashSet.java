@@ -152,7 +152,7 @@ public class MyHashSet<T> {
 
 	@Override
 	public String toString() {
-		return ArrayUtils.arrayToString(toArray());
+		return ArrayUtils.collectionToString(toArray());
 	}
 
 	// Prints the structure of the hashtable as is
@@ -163,7 +163,7 @@ public class MyHashSet<T> {
 			else if (x instanceof LinkedList<?>) {
 				@SuppressWarnings("unchecked")
 				LinkedList<T> temp = ((LinkedList<T>) x);
-				ArrayUtils.printArray(temp);
+				ArrayUtils.printCollection(temp);
 			} else {
 				@SuppressWarnings("unchecked")
 				T temp = (T) x;

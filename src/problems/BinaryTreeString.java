@@ -74,7 +74,7 @@ public class BinaryTreeString {
 		Queue<Node> Q = new LinkedList<Node>(), T = new LinkedList<Node>();
 		Q.add(root);
 		while (!Q.isEmpty()) {
-			printString += ArrayUtils.arrayToString(Q) + "\n";
+			printString += ArrayUtils.collectionToString(Q) + "\n";
 			for (Node n : Q) {
 				if (n.left != null) T.add(n.left);
 				if (n.right != null) T.add(n.right);

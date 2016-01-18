@@ -40,7 +40,7 @@ public class QueuedQueues {
 		X.add(B);
 		X.add(C);
 
-		ArrayUtils.printArray(X);
-		ArrayUtils.printArray(flatten(X));
+		ArrayUtils.printCollection(X);
+		ArrayUtils.printCollection(flatten(X));
 	}
 }

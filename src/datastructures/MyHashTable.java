@@ -170,7 +170,7 @@ public class MyHashTable<K, V> {
 
 	@Override
 	public String toString() {
-		return ArrayUtils.arrayToString(toArray());
+		return ArrayUtils.collectionToString(toArray());
 	}
 
 	// Prints the structure of the hashtable as is
@@ -181,7 +181,7 @@ public class MyHashTable<K, V> {
 			else if (x instanceof LinkedList<?>) {
 				@SuppressWarnings("unchecked")
 				LinkedList<KVPair> temp = ((LinkedList<KVPair>) x);
-				ArrayUtils.printArray(temp);
+				ArrayUtils.printCollection(temp);
 			} else {
 				@SuppressWarnings("unchecked")
 				KVPair temp = (KVPair) x;

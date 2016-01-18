@@ -1,11 +1,11 @@
 package datastructures;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import datastructures.BinarySearchTree.Node;
-import util.ArrayUtils;
 
 // This class in an implementation of a classic Binary Search Tree.
 public class BinarySearchTree<T extends Comparable<T>> implements Iterable<Node<T>> {
@@ -225,7 +225,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<Node<
 	public static void main(String[] args) {
 		BinarySearchTree<Integer> tree = new BinarySearchTree<Integer>();
 		tree.add(4);
-		tree.addAll(ArrayUtils.createList(new int[] {1, 2, 3, 4, 5, 6, 7}));
+		tree.addAll(Arrays.asList(new Integer[] {1, 2, 3, 4, 5, 6, 7}));
 		System.out.println(tree);
 		Node<Integer> four = tree.search(4);
 		Node<Integer> prev = tree.getPredecessor(four), succ = tree.getSuccessor(four);
