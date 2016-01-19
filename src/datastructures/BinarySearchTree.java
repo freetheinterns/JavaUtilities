@@ -5,10 +5,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import datastructures.BinarySearchTree.Node;
-
 // This class in an implementation of a classic Binary Search Tree.
-public class BinarySearchTree<T extends Comparable<T>> implements Iterable<Node<T>> {
+public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>, Collection<T> {
 	// This class provides the necessary structure for nodes in a BST.
 	public static class Node<K> {
 		public Node<K> parent, left, right;
@@ -24,7 +22,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<Node<
 	}
 
 	// This class implements a classic iterator for this BST, while also implementing reverse iteration.
-	public static class BSTIterator<K extends Comparable<K>> implements Iterator<Node<K>> {
+	public static class BSTIterator<K extends Comparable<K>> implements Iterator<K> {
 		// An instance of the tree to iterate is necessary for accessing generic private methods without casting.
 		public BinarySearchTree<K> tree;
 		public Node<K> current;
@@ -44,31 +42,32 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<Node<
 		}
 
 		@Override
-		public Node<K> next() {
+		public K next() {
 			if (current == null) {
 				if (tree.root == null) {
 					throw new NoSuchElementException();
 				} else {
 					current = tree.getMinimum();
-					return current;
+					return current.value;
 				}
 			}
 			Node<K> nextNode = tree.getSuccessor(current);
 			if (nextNode == null) throw new NoSuchElementException();
 			current = nextNode;
-			return current;
+			return current.value;
 		}
 
-		public Node<K> prev() {
+		public K prev() {
 			if (current == null) throw new NoSuchElementException();
 			Node<K> previousNode = tree.getPredecessor(current);
 			if (previousNode == null) throw new NoSuchElementException();
 			current = previousNode;
-			return current;
+			return current.value;
 		}
 	}
 
 	private Node<T> root;
+	private int size;
 
 	public BinarySearchTree() {}
 
@@ -93,8 +92,27 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<Node<
 		return current;
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	// Assumes object passed is of type T.
+	// Returns true if a search for a node with such a value is successful.
+	public boolean contains(Object o) {
+		T itemtoremove = (T) o;
+		Node<T> nodetoremove = search(itemtoremove);
+		return nodetoremove == null;
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		for (Object o : c) {
+			if (!contains(o)) return false;
+		}
+		return true;
+	}
+
+	@Override
 	// Similar to search algorithm with minimal additional overhead for corner cases. O(log N)
-	public void add(T item) {
+	public boolean add(T item) {
 		Node<T> newNode = new Node<T>(item), newLocationProbe = root, previousNode = null;
 		while (newLocationProbe != null) {
 			previousNode = newLocationProbe;
@@ -112,13 +130,39 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<Node<
 		} else {
 			previousNode.right = newNode;
 		}
+		++size;
+		return true;
 	}
 
+	@Override
 	// Simple collection addition. O(M log N) for collection of size M
-	public void addAll(Collection<T> itemsToAdd) {
+	public boolean addAll(Collection<? extends T> itemsToAdd) {
 		for (T item : itemsToAdd) {
 			add(item);
 		}
+		return true;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	// Assumes you are trying to remove something of type T.
+	// Returns true if that item was found in the BST and removes it.
+	// Returns false if no node was found with such value.
+	public boolean remove(Object o) {
+		T itemtoremove = (T) o;
+		Node<T> nodetoremove = search(itemtoremove);
+		if (nodetoremove == null) return false;
+		delete(nodetoremove);
+		return true;
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		boolean allremoved = true;
+		for (Object o : c) {
+			if (!remove(o)) allremoved = false;
+		}
+		return allremoved;
 	}
 
 	// Removes node from tree. Runtime varies depending on case. Simple cases O(1).
@@ -139,6 +183,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<Node<
 			replacementNode.left = deadNode.left;
 			replacementNode.left.parent = replacementNode;
 		}
+		--size;
 	}
 
 	// Another corner case of search. O(log N)
@@ -217,9 +262,62 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<Node<
 	}
 
 	@Override
+	public void clear() {
+		root = null;
+		size = 0;
+		System.gc();
+	}
+
+	@Override
+	public int size() {
+		return size;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return root == null;
+	}
+
+	@Override
 	// Creates Iterator instance. O(1)
-	public Iterator<Node<T>> iterator() {
+	public Iterator<T> iterator() {
 		return new BSTIterator<T>(this);
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		Node<T> currentNode = getMinimum();
+		boolean anyremoved = false;
+		while (currentNode != null) {
+			Node<T> nextNode = getSuccessor(currentNode);
+			if (c.contains(currentNode.value)) {
+				delete(currentNode);
+				anyremoved = true;
+			}
+			currentNode = nextNode;
+		}
+		return anyremoved;
+	}
+
+	@Override
+	public Object[] toArray() {
+		Object[] output = new Object[size];
+		int index = 0;
+		for (T item : this) {
+			output[index++] = item;
+		}
+		return output;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public <K> K[] toArray(K[] ary) {
+		int index = 0;
+		for (T item : this) {
+			if (index >= ary.length) return ary;
+			ary[index++] = (K) item;
+		}
+		return ary;
 	}
 
 	public static void main(String[] args) {
@@ -239,7 +337,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<Node<
 		System.out.println("Tree Maximum:" + tree.getMaximum());
 		System.out.println("Tree Minimum:" + tree.getMinimum());
 		String iteratortest = "Foreach iterator test: [";
-		for (Node<Integer> n : tree) {
+		for (Integer n : tree) {
 			iteratortest += n;
 		}
 		System.out.println(iteratortest + "]");
