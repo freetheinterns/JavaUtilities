@@ -123,7 +123,7 @@ public class QuickSorter {
 	}
 
 	// These partition functions choose a random piviot, then partition their segment around that piviot value.
-	private static <T extends Comparable<T>> int partition(List<T> ary, int start, int end) {
+	public static <T extends Comparable<T>> int partition(List<T> ary, int start, int end) {
 		Collections.swap(ary, rand.nextInt(end - start) + start, end);
 		T pivot = ary.get(end);
 		int below = start - 1;
@@ -136,7 +136,7 @@ public class QuickSorter {
 		return below;
 	}
 
-	private static <T extends Comparable<T>> int partition(T[] ary, int start, int end) {
+	public static <T extends Comparable<T>> int partition(T[] ary, int start, int end) {
 		ArrayUtils.swap(ary, rand.nextInt(end - start) + start, end);
 		T pivot = ary[end];
 		int below = start - 1;
@@ -149,7 +149,7 @@ public class QuickSorter {
 		return below;
 	}
 
-	private static int partition(double[] ary, int start, int end) {
+	public static int partition(double[] ary, int start, int end) {
 		ArrayUtils.swap(ary, rand.nextInt(end - start) + start, end);
 		double pivot = ary[end];
 		int below = start - 1;
@@ -162,7 +162,7 @@ public class QuickSorter {
 		return below;
 	}
 
-	private static int partition(float[] ary, int start, int end) {
+	public static int partition(float[] ary, int start, int end) {
 		ArrayUtils.swap(ary, rand.nextInt(end - start) + start, end);
 		float pivot = ary[end];
 		int below = start - 1;
@@ -175,7 +175,7 @@ public class QuickSorter {
 		return below;
 	}
 
-	private static int partition(long[] ary, int start, int end) {
+	public static int partition(long[] ary, int start, int end) {
 		ArrayUtils.swap(ary, rand.nextInt(end - start) + start, end);
 		long pivot = ary[end];
 		int below = start - 1;
@@ -188,7 +188,7 @@ public class QuickSorter {
 		return below;
 	}
 
-	private static int partition(int[] ary, int start, int end) {
+	public static int partition(int[] ary, int start, int end) {
 		ArrayUtils.swap(ary, rand.nextInt(end - start) + start, end);
 		int pivot = ary[end];
 		int below = start - 1;
@@ -201,7 +201,7 @@ public class QuickSorter {
 		return below;
 	}
 
-	private static int partition(short[] ary, int start, int end) {
+	public static int partition(short[] ary, int start, int end) {
 		ArrayUtils.swap(ary, rand.nextInt(end - start) + start, end);
 		short pivot = ary[end];
 		int below = start - 1;
@@ -214,7 +214,7 @@ public class QuickSorter {
 		return below;
 	}
 
-	private static int partition(byte[] ary, int start, int end) {
+	public static int partition(byte[] ary, int start, int end) {
 		ArrayUtils.swap(ary, rand.nextInt(end - start) + start, end);
 		byte pivot = ary[end];
 		int below = start - 1;
@@ -227,7 +227,7 @@ public class QuickSorter {
 		return below;
 	}
 
-	private static int partition(char[] ary, int start, int end) {
+	public static int partition(char[] ary, int start, int end) {
 		ArrayUtils.swap(ary, rand.nextInt(end - start) + start, end);
 		char pivot = ary[end];
 		int below = start - 1;
@@ -257,13 +257,13 @@ public class QuickSorter {
 
 		// Print unsorted lists
 		System.out.println("UNSORTED:");
-		Arrays.toString(a);
-		Arrays.toString(b);
-		Arrays.toString(c);
-		Arrays.toString(d);
-		Arrays.toString(e);
-		Arrays.toString(f);
-		Arrays.toString(g);
+		System.out.println(Arrays.toString(a));
+		System.out.println(Arrays.toString(b));
+		System.out.println(Arrays.toString(c));
+		System.out.println(Arrays.toString(d));
+		System.out.println(Arrays.toString(e));
+		System.out.println(Arrays.toString(f));
+		System.out.println(Arrays.toString(g));
 		ArrayUtils.printCollection(h);
 
 		// Sort all of the lists
@@ -279,13 +279,13 @@ public class QuickSorter {
 		// Print sorted results
 		System.out.println();
 		System.out.println("SORTED:");
-		Arrays.toString(a);
-		Arrays.toString(b);
-		Arrays.toString(c);
-		Arrays.toString(d);
-		Arrays.toString(e);
-		Arrays.toString(f);
-		Arrays.toString(g);
+		System.out.println(Arrays.toString(a));
+		System.out.println(Arrays.toString(b));
+		System.out.println(Arrays.toString(c));
+		System.out.println(Arrays.toString(d));
+		System.out.println(Arrays.toString(e));
+		System.out.println(Arrays.toString(f));
+		System.out.println(Arrays.toString(g));
 		ArrayUtils.printCollection(h);
 	}
 }

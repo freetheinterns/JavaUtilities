@@ -410,7 +410,13 @@ public class LawnMowingVis {
                 row += tc.yard[y][x];
             }
             writer.println(row);
+//            System.out.println(row);
         }
+//		System.out.println(tc.turnCost);
+//		System.out.println(tc.forwardCost);
+//		System.out.println(tc.slopeCost);
+//		System.out.println(tc.startX);
+//		System.out.println(tc.startY);
         writer.println(tc.turnCost);
         writer.println(tc.forwardCost);
         writer.println(tc.slopeCost);
